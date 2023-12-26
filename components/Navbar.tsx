@@ -1,16 +1,22 @@
 'use client'
 import { signIn, signOut, useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 const Navbar = () => {
     const { data: session } = useSession()
+    const router = useRouter();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     const [toggleDropdown, setToggleDropdown] = useState(false);
     const [showModal, setShowModal] = useState(false);
+
+    const goBack = () => {
+        router.back();
+    };
 
     function handleGoogleSignIn() {
         signIn('google', { redirect: true, callbackUrl: "http://localhost:3000/", prompt: 'consent' })
@@ -31,8 +37,12 @@ const Navbar = () => {
 
     return (
         <nav className='flex justify-between items-center m-6'>
-
-            <h1 className='font-bold text-xl'>Logo</h1>
+            <div className='flex items-center gap-3'>
+                <button onClick={goBack}>
+                <span className='font-bold text-2xl'>&lsaquo;</span> 
+                </button>
+                <h1 className='font-bold text-xl'>Logo</h1>
+            </div>
             {session && session?.user && session.user.image ? (
                 <div className='relative'>
                     <div className='flex items-center gap-2 cursor-pointer' onClick={() => setToggleDropdown(!toggleDropdown)}>
