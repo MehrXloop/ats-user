@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import dummyData from '@/lib/jobs'
 
 export default function Home() {
   return (
