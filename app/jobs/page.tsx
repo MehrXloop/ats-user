@@ -4,11 +4,13 @@ import dummyData, { Job } from '@/lib/jobs'
 import moment from 'moment';
 import SignUpOptions from '@/components/SignUpOptions';
 import { useSession } from 'next-auth/react';
+import ApplyJobModal from '@/components/ApplyJobModal';
 
 const Jobs = () => {
-  const {data :session } = useSession()
+  const { data: session } = useSession()
   const [selectedJob, setSelectedJob] = useState<Job>(dummyData[0]);
   const [applyModal, setApplyModal] = useState(false)
+  const [fastApplyModal, setFastApplyModal] = useState(false)
   const [showSignModal, setShowSignModal] = useState(false);
 
 
@@ -84,20 +86,24 @@ const Jobs = () => {
               </button>
             </div>
             <div className='flex justify-between gap-1'>
-              <button type='button' className='border_btn'>
+              <button type='button' className='border_btn' onClick={() => {
+                setFastApplyModal(true);
+                setApplyModal(false);
+              }}>
                 Fast Apply
               </button>
               {!session &&
-              <button type='button' className='border_btn' onClick={()=> setShowSignModal(true)}>
-                Apply With Login
-              </button>}
+                <button type='button' className='border_btn' onClick={() => {setShowSignModal(true); setApplyModal(false);}}>
+                  Apply With Login
+                </button>}
             </div>
           </div>
         </div>
       )
       }
 
-      {showSignModal && <SignUpOptions setShowSignModal={setShowSignModal}/>}
+      {showSignModal && <SignUpOptions setShowSignModal={setShowSignModal} />}
+      {fastApplyModal && <ApplyJobModal setFastApplyModal={setFastApplyModal} />}
     </>
   )
 }

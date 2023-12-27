@@ -5,8 +5,7 @@ import React, { useState } from 'react'
 interface Props {
     setShowSignModal: React.Dispatch<React.SetStateAction<boolean>>
 }
-
-const SignUpOptions: React.FC<Props> = ({ setShowSignModal }) => {
+const SignUpOptions: React.FC<Props> = ({setShowSignModal}) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
