@@ -24,7 +24,6 @@ const Navbar = () => {
         localStorage.clear();
         setToggleDropdown(false);
     }
-    console.log(session?.user)
     return (
         <nav className='flex justify-between items-center m-6'>
             <div className='flex items-center gap-3'>

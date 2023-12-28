@@ -25,7 +25,7 @@ const ApplyJobModal: React.FC<Props> = ({ setFastApplyModal }) => {
         setFile(selectedFile);
     };
 
-    const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (file) {
             // Perform actions with the selected file (e.g., upload)
@@ -42,7 +42,8 @@ const ApplyJobModal: React.FC<Props> = ({ setFastApplyModal }) => {
         setLastName('');
         setEmail('');
         setPhone('');
-    };
+
+    }
 
     return (
         <div className='fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50'>
