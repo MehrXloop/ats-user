@@ -17,7 +17,8 @@ const nextConfig = {
                 protocol:"https",
                 hostname:"media.licdn.com"
             }
-        ]
+        ],
+        domains :["e7.pngegg.com"],
     }
 }
 
