@@ -1,6 +1,14 @@
 'use client'
+import SendEmail from '@/utils/SendEmail';
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
+
+export type FormData = {
+  name: string;
+  email: string;
+  message: string;
+};
 interface Props {
     setFastApplyModal: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -11,6 +19,7 @@ const ApplyJobModal: React.FC<Props> = ({ setFastApplyModal }) => {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [file, setFile] = useState<File | null>(null);
+
 
     const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
@@ -25,25 +34,29 @@ const ApplyJobModal: React.FC<Props> = ({ setFastApplyModal }) => {
         setFile(selectedFile);
     };
 
-    const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if (file) {
-            // Perform actions with the selected file (e.g., upload)
-            console.log('Selected File:', file);
-            // Reset file state
-            setFile(null);
-        }
+    // const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    //     e.preventDefault();
+    //     if (file) {
+    //         console.log('Selected File:', file);
+    //         setFile(null);
+    //     }
 
-        // Here, you can use the values of firstName, lastName, email, phone for form submission
-        console.log('Form Data:', { firstName, lastName, email, phone });
 
-        // Reset input fields
-        setFirstName('');
-        setLastName('');
-        setEmail('');
-        setPhone('');
+    //     console.log('Form Data:', { firstName, lastName, email, phone });
 
-    }
+    //     // Reset input fields
+    //     setFirstName('');
+    //     setLastName('');
+    //     setEmail('');
+    //     setPhone('');
+
+    // }
+
+    const { register, handleSubmit } = useForm<FormData>();
+
+  function onSubmit(data: FormData) {
+    SendEmail(data);
+  }
 
     return (
         <div className='fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50'>
@@ -72,7 +85,7 @@ const ApplyJobModal: React.FC<Props> = ({ setFastApplyModal }) => {
                     />
                 </div>
 
-                <form className="" onSubmit={handleFormSubmit}>
+                <form className="" onSubmit={handleSubmit(onSubmit)}>
                     <div className="mb-4 flex flex-col md:flex-row justify-between">
                         <div className="w-full md:w-1/2 mb-4 md:mb-0">
                             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="firstName">
