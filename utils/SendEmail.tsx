@@ -1,5 +1,4 @@
 import { FormData } from '@/components/ApplyJobModal';
-import React from 'react'
 
 const SendEmail = (data: FormData) => {
     const apiEndpoint = '/api/email';
@@ -15,6 +14,7 @@ const SendEmail = (data: FormData) => {
         .catch((err) => {
             alert(err);
         });
+    // console.log(data)
 }
 
 export default SendEmail
