@@ -66,7 +66,7 @@ export default function Home() {
             </select>
             <button className="outline_btn" onClick={applyFilters}>Search</button>
           </div>
-          <div className="flex justify-end bg-red-700">
+          <div className="flex justify-end">
             <Image
               src="/images/thumbnail.png"
               alt="cover image"
