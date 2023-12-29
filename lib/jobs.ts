@@ -4,8 +4,8 @@ export interface Job {
   id: number;
   title: string;
   description: string;
-  city: string | null;
-  country: string | null;
+  city: string ;
+  country: string ;
   nature_of_job: "full time" | "part time";
   postedAt: Date;
 }
