@@ -10,8 +10,7 @@ export default function Home() {
   const [natureFilter, setNatureFilter] = useState<
     "part time" | "full time" | ""
   >("");
-  const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
-  const[showAllJobs,setShowAllJobs] = useState(true);
+  const [filteredJobs, setFilteredJobs] = useState<Job[]>(dummyData);
 
   const applyFilters = () => {
     const newFilteredJobs = dummyData.filter((job) => {
@@ -28,8 +27,6 @@ export default function Home() {
     });
 
     setFilteredJobs(newFilteredJobs);
-    setShowAllJobs(false)
-    console.log(showAllJobs)
   };
 
   return (
@@ -40,7 +37,7 @@ export default function Home() {
           <div className="flex flex-col gap-y-10 justify-center px-8 border-2 ">
             <h1>First Features</h1>
             <p>Search thousands of job openings from ...........</p>
-            <input className="border-2 rounded-lg p-5 bg-red-700 "
+            <input className="border-2 rounded-lg p-5 "
               type="text"
               placeholder="City"
               value={cityFilter}
@@ -78,27 +75,6 @@ export default function Home() {
           </div>
         </div>
         <div>
-          {/* <h1>Software Engineering Jobs</h1>
-          <h2>All Jobs</h2> */}
-          {showAllJobs &&    <div className="bg-white p-6 rounded-lg w-auto">
-              <ul className="glassmorphism">
-                {dummyData.map((job) => (
-                  <li
-                    key={job.id}
-                    className=" bg-white shadow rounded border border-slate-300 border-spacing-2"
-                  >
-                    <strong>{job.title}</strong>
-                    <p>{job.description}</p>
-                    <p>
-                      Location: {job.city || "Remote"}, {job.country || "N/A"}
-                    </p>
-                    <p>Nature of Job: {job.nature_of_job}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>}
-       
-
           {/* <h2>Filtered Jobs</h2> */}
           {/* Job List */}
 
