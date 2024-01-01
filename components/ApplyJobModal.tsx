@@ -2,6 +2,7 @@
 import SendEmail from '@/utils/SendEmail';
 import React, { useState } from 'react';
 import { useForm, } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 
 
 export type FormData = {
@@ -18,6 +19,7 @@ interface Props {
 const ApplyJobModal: React.FC<Props> = ({ setFastApplyModal }) => {
     const [file, setFile] = useState<File | null>(null);
     const { register, handleSubmit, reset } = useForm<FormData>();
+    const router = useRouter();
 
 
     const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
@@ -42,6 +44,7 @@ const ApplyJobModal: React.FC<Props> = ({ setFastApplyModal }) => {
             setFile(null);
         }
         reset();
+        router.push('/thankyou')
     }
 
     return (

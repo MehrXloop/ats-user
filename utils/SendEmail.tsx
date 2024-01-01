@@ -1,5 +1,4 @@
 import { FormData } from '@/components/ApplyJobModal';
-
 const SendEmail = (data: FormData) => {
     const apiEndpoint = '/api/email';
 
