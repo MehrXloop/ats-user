@@ -10,7 +10,6 @@ export type FormData = {
     email: string;
     phone: string;
     fileInput: File;
-    //   message: string;
 };
 interface Props {
     setFastApplyModal: React.Dispatch<React.SetStateAction<boolean>>
@@ -33,24 +32,6 @@ const ApplyJobModal: React.FC<Props> = ({ setFastApplyModal }) => {
         const selectedFile = e.target.files && e.target.files[0];
         setFile(selectedFile);
     };
-
-    // const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    //     e.preventDefault();
-    //     if (file) {
-    //         console.log('Selected File:', file);
-    //         setFile(null);
-    //     }
-
-
-    //     console.log('Form Data:', { firstName, lastName, email, phone });
-
-    //     // Reset input fields
-    //     setFirstName('');
-    //     setLastName('');
-    //     setEmail('');
-    //     setPhone('');
-
-    // }
 
 
 
