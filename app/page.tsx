@@ -99,7 +99,7 @@ export default function Home() {
             //   ))}
             // </ul>
             <div>
-            {dummyData.map((job: Job) => (
+            {filteredJobs.map((job: Job) => (
               <div className='job_card glassmorphism' key={job.id}>
                 <div className='flex justify-between items-start gap-1 flex-col'>
                   <h1 className='font-bold text-2xl cursor-pointer'>{job.title}</h1>
