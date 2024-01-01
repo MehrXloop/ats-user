@@ -3,10 +3,12 @@ import dummyData, { Job } from "@/lib/jobs";
 import Image from "next/image";
 import { useState } from "react";
 import "@/app/globals.css";
+import { FilteredJobs } from "@/components/FilteredJobs";
 
 export default function Home() {
   const [cityFilter, setCityFilter] = useState("");
   const [countryFilter, setCountryFilter] = useState("");
+  const [titleFilter,setTitleFilter] = useState("");
   const [natureFilter, setNatureFilter] = useState<
     "part time" | "full time" | ""
   >("");
@@ -20,10 +22,11 @@ export default function Home() {
       const countryMatch = job.country
         .toLowerCase()
         .includes(countryFilter.toLowerCase());
+      const titleMatch = job.title.toLowerCase().includes(titleFilter.toLowerCase())
       const natureMatch =
         natureFilter === "" || job.nature_of_job === natureFilter;
 
-      return cityMatch && countryMatch && natureMatch;
+      return titleMatch && cityMatch && countryMatch && natureMatch;
     });
 
     setFilteredJobs(newFilteredJobs);
@@ -33,10 +36,17 @@ export default function Home() {
     <>
       {/* <h1>home</h1> */}
       <div className="flex flex-col">
-        <div className="flex justify-between rounded-lg ml-10 mr-10">
-          <div className="flex flex-col gap-y-10 justify-center px-8 border-2 ">
+        <div className="flex justify-between items-start mx-2">
+          <div className="flex flex-col gap-y-10 px-8 border-2  w-half ">
             <h1>First Features</h1>
             <p>Search thousands of job openings from ...........</p>
+            <input
+              className="border-2 rounded-lg p-5 "
+              type="text"
+              placeholder="Job Title"
+              value={titleFilter}
+              onChange={(e) => setTitleFilter(e.target.value)}
+            />
             <input
               className="border-2 rounded-lg p-5 "
               type="text"
@@ -68,12 +78,13 @@ export default function Home() {
               Search
             </button>
           </div>
-          <div className="flex justify-end">
+          <div>
             <Image
               src="/images/thumbnail.png"
               alt="cover image"
-              width="500"
-              height="500"
+              width="300"
+              height="400"
+              // fill = {true}
             ></Image>
             {/* <Image src="https://e7.pngegg.com/pngimages/320/804/png-clipart-regulatory-compliance-business-marketing-recruitment-applicant-tracking-system-business-people-logo-thumbnail.png" alt="external image" width="500" height="300">
         </Image> */}
@@ -98,16 +109,18 @@ export default function Home() {
             //     </li>
             //   ))}
             // </ul>
-            <div>
-            {filteredJobs.map((job: Job) => (
-              <div className='job_card glassmorphism' key={job.id}>
-                <div className='flex justify-between items-start gap-1 flex-col'>
-                  <h1 className='font-bold text-2xl cursor-pointer'>{job.title}</h1>
-                  <p className='text-xl'>{job.city}, {job.country}, {job.nature_of_job}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+            // ---------------------
+          //   <div>
+          //   {filteredJobs.map((job: Job) => (
+          //     <div className='job_card glassmorphism' key={job.id}>
+          //       <div className='flex justify-between items-start gap-1 flex-col'>
+          //         <h1 className='font-bold text-2xl cursor-pointer'>{job.title}</h1>
+          //         <p className='text-xl'>{job.city}, {job.country}, {job.nature_of_job}</p>
+          //       </div>
+          //     </div>
+          //   ))}
+          // </div>
+          <FilteredJobs filteredJobs={filteredJobs}/>
           )
           }
         </div>

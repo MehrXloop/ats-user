@@ -17,8 +17,6 @@ export const GET = async (req:Request) => {
 
     }
     console.log("GET")
-   
-
 }
 
 export const PUT = async(req: Request) =>{
