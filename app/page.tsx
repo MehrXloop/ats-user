@@ -2,7 +2,7 @@
 import dummyData, { Job } from "@/lib/jobs";
 import Image from "next/image";
 import { useState } from "react";
-import "@/app/globals.css"
+import "@/app/globals.css";
 
 export default function Home() {
   const [cityFilter, setCityFilter] = useState("");
@@ -10,8 +10,7 @@ export default function Home() {
   const [natureFilter, setNatureFilter] = useState<
     "part time" | "full time" | ""
   >("");
-  const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
-  const[showAllJobs,setShowAllJobs] = useState(true);
+  const [filteredJobs, setFilteredJobs] = useState<Job[]>(dummyData);
 
   const applyFilters = () => {
     const newFilteredJobs = dummyData.filter((job) => {
@@ -28,8 +27,6 @@ export default function Home() {
     });
 
     setFilteredJobs(newFilteredJobs);
-    setShowAllJobs(false)
-    console.log(showAllJobs)
   };
 
   return (
@@ -40,19 +37,22 @@ export default function Home() {
           <div className="flex flex-col gap-y-10 justify-center px-8 border-2 ">
             <h1>First Features</h1>
             <p>Search thousands of job openings from ...........</p>
-            <input className="border-2 rounded-lg p-5 bg-red-700 "
+            <input
+              className="border-2 rounded-lg p-5 "
               type="text"
               placeholder="City"
               value={cityFilter}
               onChange={(e) => setCityFilter(e.target.value)}
             />
-            <input className="border-2 rounded-lg p-5"
+            <input
+              className="border-2 rounded-lg p-5"
               type="text"
               placeholder="Country"
               value={countryFilter}
               onChange={(e) => setCountryFilter(e.target.value)}
             />
-            <select className=" border-2 rounded-lg p-5"
+            <select
+              className=" border-2 rounded-lg p-5"
               value={natureFilter}
               onChange={(e) =>
                 setNatureFilter(
@@ -64,9 +64,11 @@ export default function Home() {
               <option value="part time">Part-Time</option>
               <option value="full time">Full-Time</option>
             </select>
-            <button className="outline_btn" onClick={applyFilters}>Search</button>
+            <button className="outline_btn" onClick={applyFilters}>
+              Search
+            </button>
           </div>
-          <div className="flex justify-end bg-red-700">
+          <div className="flex justify-end">
             <Image
               src="/images/thumbnail.png"
               alt="cover image"
@@ -78,45 +80,36 @@ export default function Home() {
           </div>
         </div>
         <div>
-          {/* <h1>Software Engineering Jobs</h1>
-          <h2>All Jobs</h2> */}
-          {showAllJobs &&    <div className="bg-white p-6 rounded-lg w-auto">
-              <ul className="glassmorphism">
-                {dummyData.map((job) => (
-                  <li
-                    key={job.id}
-                    className=" bg-white shadow rounded border border-slate-300 border-spacing-2"
-                  >
-                    <strong>{job.title}</strong>
-                    <p>{job.description}</p>
-                    <p>
-                      Location: {job.city || "Remote"}, {job.country || "N/A"}
-                    </p>
-                    <p>Nature of Job: {job.nature_of_job}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>}
-       
-
           {/* <h2>Filtered Jobs</h2> */}
           {/* Job List */}
 
-          {filteredJobs && (
-            <ul>
-              {filteredJobs.map((job: Job, index: number) => (
-                <li key={index}>
-                  <h2>{job.title}</h2>
-                  <p>{job.description}</p>
-                  {/* <p>Posted on: {job.postedAt}</p> */}
-                  <p>
-                    Location: {job.city}, {job.country}
-                  </p>
-                  <p>Nature of Job: {job.nature_of_job}</p>
-                </li>
-              ))}
-            </ul>
-          )}
+          {filteredJobs && 
+          (
+            // <ul>
+            //   {filteredJobs.map((job: Job, index: number) => (
+            //     <li key={index}>
+            //       <h2>{job.title}</h2>
+            //       <p>{job.description}</p>
+            //       {/* <p>Posted on: {job.postedAt}</p> */}
+            //       <p>
+            //         Location: {job.city}, {job.country}
+            //       </p>
+            //       <p>Nature of Job: {job.nature_of_job}</p>
+            //     </li>
+            //   ))}
+            // </ul>
+            <div>
+            {dummyData.map((job: Job) => (
+              <div className='job_card glassmorphism' key={job.id}>
+                <div className='flex justify-between items-start gap-1 flex-col'>
+                  <h1 className='font-bold text-2xl cursor-pointer'>{job.title}</h1>
+                  <p className='text-xl'>{job.city}, {job.country}, {job.nature_of_job}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          )
+          }
         </div>
       </div>
     </>
