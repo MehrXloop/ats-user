@@ -1,24 +1,23 @@
 'use client'
 import SendEmail from '@/utils/SendEmail';
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, } from 'react-hook-form';
 
 
 export type FormData = {
-  name: string;
-  email: string;
-  message: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    fileInput: File;
 };
 interface Props {
     setFastApplyModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const ApplyJobModal: React.FC<Props> = ({ setFastApplyModal }) => {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
     const [file, setFile] = useState<File | null>(null);
+    const { register, handleSubmit, reset } = useForm<FormData>();
 
 
     const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
@@ -34,29 +33,16 @@ const ApplyJobModal: React.FC<Props> = ({ setFastApplyModal }) => {
         setFile(selectedFile);
     };
 
-    // const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    //     e.preventDefault();
-    //     if (file) {
-    //         console.log('Selected File:', file);
-    //         setFile(null);
-    //     }
 
 
-    //     console.log('Form Data:', { firstName, lastName, email, phone });
-
-    //     // Reset input fields
-    //     setFirstName('');
-    //     setLastName('');
-    //     setEmail('');
-    //     setPhone('');
-
-    // }
-
-    const { register, handleSubmit } = useForm<FormData>();
-
-  function onSubmit(data: FormData) {
-    SendEmail(data);
-  }
+    function onSubmit(data: FormData) {
+        SendEmail(data);
+        if (file) {
+            console.log('Selected File:', file);
+            setFile(null);
+        }
+        reset();
+    }
 
     return (
         <div className='fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50'>
@@ -96,8 +82,7 @@ const ApplyJobModal: React.FC<Props> = ({ setFastApplyModal }) => {
                                 id="firstName"
                                 type="text"
                                 placeholder="First Name"
-                                value={firstName}
-                                onChange={(e) => setFirstName(e.target.value)}
+                                {...register('firstName', { required: true })}
                             />
                         </div>
                         <div className="w-full md:w-1/2">
@@ -109,8 +94,7 @@ const ApplyJobModal: React.FC<Props> = ({ setFastApplyModal }) => {
                                 id="lastName"
                                 type="text"
                                 placeholder="Last Name"
-                                value={lastName}
-                                onChange={(e) => setLastName(e.target.value)}
+                                {...register('lastName', { required: true })}
                             />
                         </div>
                     </div>
@@ -123,8 +107,7 @@ const ApplyJobModal: React.FC<Props> = ({ setFastApplyModal }) => {
                             id="email"
                             type="email"
                             placeholder="Email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            {...register('email', { required: true })}
                         />
                     </div>
                     <div className="mb-4">
@@ -136,8 +119,7 @@ const ApplyJobModal: React.FC<Props> = ({ setFastApplyModal }) => {
                             id="phone"
                             type="tel"
                             placeholder="Phone"
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
+                            {...register('phone', { required: false })}
                         />
                     </div>
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="resume">

@@ -21,7 +21,7 @@ const SignUpOptions: React.FC<Props> = ({setShowSignModal}) => {
         signIn('azure-ad', { redirect: true, callbackUrl: "http://localhost:3000/", prompt: 'consent' })
     }
     return (
-    <div className='fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50'>
+    <div className='fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50 z-50'>
         <div className='bg-white p-6 rounded-lg w-80'>
             <div className='flex justify-end'>
                 <button
