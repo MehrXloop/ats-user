@@ -5,8 +5,20 @@ import moment from "moment";
 import SignUpOptions from "@/components/SignUpOptions";
 import { useSession } from "next-auth/react";
 import ApplyJobModal from "@/components/ApplyJobModal";
+import { useSearchParams } from "next/navigation";
+import { title } from "process";
+// import { useRouter } from "next/router";
 
 const Jobs = () => {
+  // const router = useRouter();
+  // const { title, city, country, nature } = router.query;
+  const searchParams = useSearchParams();
+  console.log("name property title: ",searchParams.get('title'))
+  console.log("name property city: ",searchParams.get('city'))
+  console.log("name property country: ",searchParams.get('country'))
+  console.log("name property nature: ",searchParams.get('nature'))
+
+
   const { data: session } = useSession();
   const [selectedJob, setSelectedJob] = useState<Job>(dummyData[0]);
   const [applyModal, setApplyModal] = useState(false);
@@ -34,33 +46,33 @@ const Jobs = () => {
     }
   };
 
-  const [cityFilter, setCityFilter] = useState("");
-  const [countryFilter, setCountryFilter] = useState("");
-  const [titleFilter,setTitleFilter] = useState("");
+  const [cityFilter, setCityFilter] = useState(searchParams.get('city'));
+  const [countryFilter, setCountryFilter] = useState(searchParams.get('country'));
+  const [titleFilter,setTitleFilter] = useState(searchParams.get('title'));
   const [natureFilter, setNatureFilter] = useState<
     "part time" | "full time" | ""
   >("");
   const [filteredJobs, setFilteredJobs] = useState<Job[]>(dummyData);
 
-  const applyFilters = () => {
-    const newFilteredJobs = dummyData.filter((job) => {
-      const cityMatch = job.city
-        .toLowerCase()
-        .includes(cityFilter.toLowerCase());
-      const countryMatch = job.country
-        .toLowerCase()
-        .includes(countryFilter.toLowerCase());
-      const titleMatch = job.title.toLowerCase().includes(titleFilter.toLowerCase())
-      const natureMatch =
-        natureFilter === "" || job.nature_of_job === natureFilter;
+  // const applyFilters = () => {
+  //   const newFilteredJobs = dummyData.filter((job) => {
+  //     const cityMatch = job.city
+  //       .toLowerCase()
+  //       .includes(cityFilter.toLowerCase());
+  //     const countryMatch = job.country
+  //       .toLowerCase()
+  //       .includes(countryFilter.toLowerCase());
+  //     const titleMatch = job.title.toLowerCase().includes(titleFilter.toLowerCase())
+  //     const natureMatch =
+  //       natureFilter === "" || job.nature_of_job === natureFilter;
 
-      return titleMatch && cityMatch && countryMatch && natureMatch;
-    });
+  //     return titleMatch && cityMatch && countryMatch && natureMatch;
+  //   });
 
-    setFilteredJobs(newFilteredJobs);
-  };
+  //   setFilteredJobs(newFilteredJobs);
+  // };
 
-
+  // console.log("received data from home: ", title,city,country,nature)
   return (
     <>
       <div className="flex flex-row gap-x-10 px-8 border-2  w-half ">
@@ -96,7 +108,9 @@ const Jobs = () => {
           <option value="part time">Part-Time</option>
           <option value="full time">Full-Time</option>
         </select>
-        <button className="outline_btn" onClick={applyFilters}>
+        <button className="outline_btn" 
+        // onClick={applyFilters}
+        >
           Search
         </button>
       </div>

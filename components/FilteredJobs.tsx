@@ -40,7 +40,7 @@ export interface filteredJobs {
 
 export const FilteredJobs = ({ filteredJobs }: { filteredJobs: filteredJobs[] }) => {
   return (
-    <div>
+    <div >
       {filteredJobs.map((job: Job) => (
         <div className='job_card glassmorphism' key={job.id}>
           <div className='flex justify-between items-start gap-1 flex-col'>

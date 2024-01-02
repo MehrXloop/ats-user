@@ -4,8 +4,11 @@ import Image from "next/image";
 import { useState } from "react";
 import "@/app/globals.css";
 import { FilteredJobs } from "@/components/FilteredJobs";
+import Link from "next/link";
+// import { useRouter } from "next/router";
 
 export default function Home() {
+  // const router = useRouter();
   const [cityFilter, setCityFilter] = useState("");
   const [countryFilter, setCountryFilter] = useState("");
   const [titleFilter,setTitleFilter] = useState("");
@@ -32,12 +35,23 @@ export default function Home() {
     setFilteredJobs(newFilteredJobs);
   };
 
+  // Pass filter data to the job page using query parameters
+  // router.push({
+  //   pathname: "/jobs",
+  //   query: {
+  //     title: titleFilter,
+  //     city: cityFilter,
+  //     country: countryFilter,
+  //     nature: natureFilter,
+  //   },
+  // });
+
   return (
     <>
       {/* <h1>home</h1> */}
       <div className="flex flex-col">
-        <div className="flex justify-between items-start mx-2">
-          <div className="flex flex-col gap-y-10 px-8 border-2  w-half ">
+        <div className="flex justify-center items-start mx-2 gap-5 ">
+          <div className="flex flex-col gap-y-10 px-8 border-2 w-1/2 ">
             <h1>First Features</h1>
             <p>Search thousands of job openings from ...........</p>
             <input
@@ -74,15 +88,35 @@ export default function Home() {
               <option value="part time">Part-Time</option>
               <option value="full time">Full-Time</option>
             </select>
-            <button className="outline_btn" onClick={applyFilters}>
-              Search
-            </button>
+            {/* <button className="outline_btn"> */}
+            <Link onClick={applyFilters} href={{
+              pathname:"/jobs",
+              query : {
+                title: titleFilter,
+                city:cityFilter,
+                country:countryFilter,
+                nature: natureFilter
+              },
+            }}> Search</Link>
+             
+            {/* </button> */}
+  
+            {/* <Link href={{
+              pathname:"/about",
+              query : {
+                title: titleFilter,
+                city:cityFilter,
+                country:countryFilter,
+                nature: natureFilter
+              },
+            }}>Go to job Page;server pe send krna ho tou , by default all server components
+            </Link> */}
           </div>
-          <div>
-            <Image
-              src="/images/thumbnail.png"
+          <div className="flex w-2/5 ">
+            <Image className="flex items-center h-100"
+              src="/images/applicant-tracking-system.png"
               alt="cover image"
-              width="300"
+              width="600"
               height="400"
               // fill = {true}
             ></Image>
@@ -90,7 +124,7 @@ export default function Home() {
         </Image> */}
           </div>
         </div>
-        <div>
+        <div className="flex justify-center items-start">
           {/* <h2>Filtered Jobs</h2> */}
           {/* Job List */}
 
