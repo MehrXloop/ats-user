@@ -5,6 +5,7 @@ import moment from 'moment';
 import SignUpOptions from '@/components/SignUpOptions';
 import { useSession } from 'next-auth/react';
 import ApplyJobModal from '@/components/ApplyJobModal';
+import JobShareOptions from '@/components/JobShareOptions';
 
 const Jobs = () => {
   const { data: session } = useSession()
@@ -12,6 +13,7 @@ const Jobs = () => {
   const [applyModal, setApplyModal] = useState(false)
   const [fastApplyModal, setFastApplyModal] = useState(false)
   const [showSignModal, setShowSignModal] = useState(false);
+  const [shareJobOptions, setShareJobOptions] = useState(false);
 
 
   const handleJobClick = (job: Job) => {
@@ -56,9 +58,14 @@ const Jobs = () => {
               <div className='flex items-center justify-between mb-4'>
                 <p className='text-xl'>Posted {formatPostedTime(selectedJob.postedAt)}</p>
                 <div className='flex gap-2'>
-                  <button type='button' className='border_btn'>
-                    Share Job
-                  </button>
+                  <div className='flex gap-2 relative'>
+                    <button type='button' className='border_btn' onClick={() => setShareJobOptions(!shareJobOptions)}>
+                      Share Job
+                    </button>
+                    {shareJobOptions && (
+                      <JobShareOptions jobId={selectedJob.id} jobTitle={selectedJob.title} setShareJobOptions={setShareJobOptions} />
+                    )}
+                  </div>
                   <button type='button' className='border_btn' onClick={() => setApplyModal(true)}>
                     Apply Now
                   </button>
@@ -93,7 +100,7 @@ const Jobs = () => {
                 Fast Apply
               </button>
               {!session &&
-                <button type='button' className='border_btn' onClick={() => {setShowSignModal(true); setApplyModal(false);}}>
+                <button type='button' className='border_btn' onClick={() => { setShowSignModal(true); setApplyModal(false); }}>
                   Apply With Login
                 </button>}
             </div>
