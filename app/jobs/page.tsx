@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import dummyData, { Job } from "@/lib/jobs";
 import moment from "moment";
 import SignUpOptions from "@/components/SignUpOptions";
@@ -49,28 +49,50 @@ const Jobs = () => {
   const [cityFilter, setCityFilter] = useState(searchParams.get('city'));
   const [countryFilter, setCountryFilter] = useState(searchParams.get('country'));
   const [titleFilter,setTitleFilter] = useState(searchParams.get('title'));
+  // const [newFilteredJobs, setnewFilteredJobs] = useState([])
   const [natureFilter, setNatureFilter] = useState<
     "part time" | "full time" | ""
   >("");
   const [filteredJobs, setFilteredJobs] = useState<Job[]>(dummyData);
 
-  // const applyFilters = () => {
-  //   const newFilteredJobs = dummyData.filter((job) => {
-  //     const cityMatch = job.city
-  //       .toLowerCase()
-  //       .includes(cityFilter.toLowerCase());
-  //     const countryMatch = job.country
-  //       .toLowerCase()
-  //       .includes(countryFilter.toLowerCase());
-  //     const titleMatch = job.title.toLowerCase().includes(titleFilter.toLowerCase())
-  //     const natureMatch =
-  //       natureFilter === "" || job.nature_of_job === natureFilter;
+  const applyFilters = () => {
 
-  //     return titleMatch && cityMatch && countryMatch && natureMatch;
-  //   });
+    const newFilteredJobs = dummyData.filter((job) => {
+      let cityMatch;
+      let countryMatch;
+      let titleMatch;
 
-  //   setFilteredJobs(newFilteredJobs);
-  // };
+      if (titleFilter) {
+
+        titleMatch =  job.city
+         .toLowerCase() 
+         .includes(titleFilter.toLowerCase());
+      }
+
+     if (cityFilter) {
+
+       cityMatch =  job.city
+        .toLowerCase() 
+        .includes(cityFilter.toLowerCase());
+     }
+      if(countryFilter) {
+        countryMatch = job.country
+        .toLowerCase()
+        .includes(countryFilter.toLowerCase());
+      }
+
+      // const natureMatch =
+      //   natureFilter === "" || job.nature_of_job === natureFilter;
+
+      return titleMatch && cityMatch && countryMatch;
+    });
+
+    setFilteredJobs(newFilteredJobs);
+  };
+
+  useEffect(() => {
+    applyFilters();
+  },[searchParams.get('city')])
 
   // console.log("received data from home: ", title,city,country,nature)
   return (
@@ -109,7 +131,7 @@ const Jobs = () => {
           <option value="full time">Full-Time</option>
         </select>
         <button className="outline_btn" 
-        // onClick={applyFilters}
+        onClick={applyFilters}
         >
           Search
         </button>
@@ -117,7 +139,7 @@ const Jobs = () => {
 
       <div className="flex justify-between items-start mx-2">
         <div>
-          {dummyData.map((job: Job) => (
+          {filteredJobs.map((job: Job) => (
             <div className="job_card glassmorphism" key={job.id}>
               <div className="flex justify-between items-start gap-1 flex-col">
                 <h1
